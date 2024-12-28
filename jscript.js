@@ -4,24 +4,22 @@
 // divide
 
 function add(a,b){
-    return a+b;
+    return parseFloat(a)+parseFloat(b);
 }
 
 function subtract(a,b){
-    return a-b;
+    return parseFloat(a)-parseFloat(b);
 }
 
 function multiply(a,b){
-    return a*b;
+    return parseFloat(a)*parseFloat(b);
 }
 
 function divide(a,b){
-    return a/b;
+    return parseFloat(a)/parseFloat(b);
 }
 
-let firstNumber
-let secondNumber
-let operator
+
 
 function operate(operator,firstNumber,secondNumber){
     switch (operator) {
@@ -36,37 +34,37 @@ function operate(operator,firstNumber,secondNumber){
     }
 }
 
+
+let firstNumber 
+let secondNumber 
+let operator 
 let container = document.querySelector(".container");
 let display = document.querySelector("#display");
-let displayValue;
-let i = 0
+let currentValue= "";
+
+   
+
     container.addEventListener("click",(event)=>{ 
-        display.textContent = event.target.textContent;
-        displayValue = event.target.textContent;
-        console.log(event)
-
-        if(i === 0 && (parseFloat(displayValue)!== NaN)){
-            firstNumber = parseFloat(displayValue);
-        }
-
-        if(i === 1 && (parseFloat(displayValue)!== NaN)){
-            secondNumber = parseFloat(displayValue);
-        }
-
-        if(displayValue === "+"||
-           displayValue === "-"||
-           displayValue === "*"||
-           displayValue === "/"){
-             operator = displayValue;
-             i++
-           }
         
+            currentValue += event.target.textContent;
+            display.textContent = currentValue;
 
-        if(displayValue === "="){ 
-             console.log(operate(operator,firstNumber,secondNumber));
+            let  arrNumbers = currentValue.split(/[+\-*/]/).filter((part) => part !== "");
+                 firstNumber = arrNumbers[0];
+                 secondNumber = arrNumbers[1];
+                 operator = currentValue.match(/[+\-*/]/);
+
+            if(arrNumbers.length == 2 && /[+\-*/=]/.test(event.target.textContent)){
+               currentValue = operate(operator[0],firstNumber,secondNumber);
+               display.textContent = currentValue;
+               arrNumbers = [];
+               operator = [];
+            }
             
-        }
-        
     })
     
+    
+    
+
+            
     
