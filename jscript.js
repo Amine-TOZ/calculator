@@ -55,10 +55,25 @@ let currentValue= "";
                  operator = currentValue.match(/[+\-*/]/);
 
             if(arrNumbers.length == 2 && /[+\-*/=]/.test(event.target.textContent)){
-               currentValue = operate(operator[0],firstNumber,secondNumber);
-               display.textContent = currentValue;
-               arrNumbers = [];
-               operator = [];
+                switch (event.target.textContent) {
+                    case "+":
+                    case "-":
+                    case "*":
+                    case "/": 
+                      currentValue = `${operate(operator[0],firstNumber,secondNumber)}${event.target.textContent}`;
+                      display.textContent = currentValue;
+                      arrNumbers = [];
+                      operator = [];
+                        break;
+                
+                    case "=":
+                      currentValue = operate(operator[0],firstNumber,secondNumber);
+                      display.textContent = currentValue;
+                      arrNumbers = [];
+                      operator = [];
+                        break; 
+                }
+               
             }
             
     })
