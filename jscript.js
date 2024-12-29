@@ -2,8 +2,9 @@
 // subtract
 // multiply
 // divide
+
 function roundResult(result){
-    return (result.toString().length > 7)? result.toFixed(7):result ;
+    return (result.toString().length > 7)? parseFloat(result.toFixed(7)):result ;
 }
 
 function add(a,b){
@@ -19,6 +20,9 @@ function multiply(a,b){
 }
 
 function divide(a,b){
+    if (b === 0) {
+        return "Error"; 
+    }
     return roundResult(a/b);
 }
 
@@ -33,7 +37,8 @@ function operate(operator,firstNumber,secondNumber){
         case "*":
            return multiply(firstNumber,secondNumber)    
         case "/":
-           return divide(firstNumber,secondNumber)    
+           return divide(firstNumber,secondNumber) 
+         
     }
 }
 
@@ -48,15 +53,16 @@ let currentValue= "";
    
 
     container.addEventListener("click",(event)=>{ 
-        
+            if(currentValue .includes("Error")) currentValue = "";
+
             currentValue += event.target.textContent;
             display.textContent = currentValue;
 
-            let  arrNumbers = currentValue.split(/[+\-*/]/).filter((part) => part !== "");
-                 firstNumber = arrNumbers[0];
-                 secondNumber = arrNumbers[1];
-                 operator = currentValue.match(/[+\-*/]/);
-
+            let  arrNumbers = currentValue.split(/[+\-*/]/).filter((part) => part !== "" && part !== "=");
+                 firstNumber = parseFloat(arrNumbers[0]);
+                 secondNumber = parseFloat(arrNumbers[1]);
+                 operator = currentValue.match(/[+\-*/]/g);
+               
             if(arrNumbers.length == 2 && /[+\-*/=]/.test(event.target.textContent)){
                 switch (event.target.textContent) {
                     case "+":
@@ -64,20 +70,19 @@ let currentValue= "";
                     case "*":
                     case "/": 
                       currentValue = 
-                      `${operate(operator[0],parseFloat(firstNumber),parseFloat(secondNumber))}${event.target.textContent}`;
+                      `${operate(operator.at(-1),firstNumber,secondNumber)}${event.target.textContent}`;
                       display.textContent = currentValue;
-                      arrNumbers = [];
-                      operator = [];
                         break;
                 
                     case "=":
-                      currentValue = operate(operator[0],parseFloat(firstNumber),parseFloat(secondNumber));
+                      currentValue = operate(operator.at(-1),firstNumber,secondNumber);
                       display.textContent = currentValue;
-                      arrNumbers = [];
-                      operator = [];
                         break; 
                 }
                
+            } else if(arrNumbers.length < 2 &&  event.target.textContent == "=") {
+                currentValue = currentValue.replace(/[+\-*/=]/g,"");
+                display.textContent = currentValue;
             }
             
     })
