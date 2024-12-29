@@ -2,21 +2,24 @@
 // subtract
 // multiply
 // divide
+function roundResult(result){
+    return (result.toString().length > 7)? result.toFixed(7):result ;
+}
 
 function add(a,b){
-    return parseFloat(a)+parseFloat(b);
+     return roundResult(a+b);
 }
 
 function subtract(a,b){
-    return parseFloat(a)-parseFloat(b);
-}
+     return roundResult(a-b);
+    }
 
 function multiply(a,b){
-    return parseFloat(a)*parseFloat(b);
+    return roundResult(a*b);
 }
 
 function divide(a,b){
-    return parseFloat(a)/parseFloat(b);
+    return roundResult(a/b);
 }
 
 
@@ -60,14 +63,15 @@ let currentValue= "";
                     case "-":
                     case "*":
                     case "/": 
-                      currentValue = `${operate(operator[0],firstNumber,secondNumber)}${event.target.textContent}`;
+                      currentValue = 
+                      `${operate(operator[0],parseFloat(firstNumber),parseFloat(secondNumber))}${event.target.textContent}`;
                       display.textContent = currentValue;
                       arrNumbers = [];
                       operator = [];
                         break;
                 
                     case "=":
-                      currentValue = operate(operator[0],firstNumber,secondNumber);
+                      currentValue = operate(operator[0],parseFloat(firstNumber),parseFloat(secondNumber));
                       display.textContent = currentValue;
                       arrNumbers = [];
                       operator = [];
