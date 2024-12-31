@@ -1,7 +1,9 @@
-//add
-// subtract
-// multiply
-// divide
+let firstNumber 
+let secondNumber 
+let operator 
+let container = document.querySelector(".container");
+let display = document.querySelector("#display");
+let currentValue= "";
 
 function roundResult(result){
     return (result.toString().length > 7)? parseFloat(result.toFixed(7)):result ;
@@ -43,12 +45,7 @@ function operate(operator,firstNumber,secondNumber){
 }
 
 
-let firstNumber 
-let secondNumber 
-let operator 
-let container = document.querySelector(".container");
-let display = document.querySelector("#display");
-let currentValue= "";
+
 
    
 
@@ -59,9 +56,24 @@ let currentValue= "";
                   
                 if (currentValue ==="Error") currentValue = "";
 
-                if(event.target.textContent !== "Clear"){
 
+                if(event.target.textContent == "Clear") {
+                    currentValue = "";
+                    display.textContent = "0";
+                    return;
+                }
+
+                if(event.target.textContent === "."){
                     
+                    const arrNumbers = currentValue.split(/[+\-*/]/);
+                    const lastNumber = arrNumbers[arrNumbers.length-1];
+                    
+                    if(lastNumber.includes(".")){
+                        return;
+                    }
+                }
+
+
                     currentValue += event.target.textContent;
                     display.textContent = currentValue;
         
@@ -93,10 +105,7 @@ let currentValue= "";
                     }
 
 
-                }else if(event.target.textContent == "Clear") {
-                    currentValue = ""
-                    display.textContent = "0";
-                }
+                
             }
     })
     
