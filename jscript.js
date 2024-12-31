@@ -56,22 +56,34 @@ function operate(operator,firstNumber,secondNumber){
                   
                 if (currentValue ==="Error") currentValue = "";
 
-
-                if(event.target.textContent == "Clear") {
-                    currentValue = "";
-                    display.textContent = "0";
-                    return;
-                }
-
-                if(event.target.textContent === "."){
-                    
-                    const arrNumbers = currentValue.split(/[+\-*/]/);
-                    const lastNumber = arrNumbers[arrNumbers.length-1];
-                    
-                    if(lastNumber.includes(".")){
+                switch (event.target.textContent) {
+                    case "Clear":
+                        currentValue = "";
+                        display.textContent = "0";
                         return;
-                    }
+                        
+                    case ".":
+                        const arrNumbers = currentValue.split(/[+\-*/]/);
+                        const lastNumber = arrNumbers[arrNumbers.length-1];
+                    
+                        if(lastNumber.includes(".")){
+                            return;   
+                        }
+                        break;
+
+                    case "←":
+                        if(currentValue.toString().length > 1){
+                        currentValue = currentValue.toString().slice(0,-1);
+                        display.textContent = currentValue;
+                        } else {
+                            currentValue = ""
+                            display.textContent = "0";
+                        }
+                        return;
                 }
+                
+
+               
 
 
                     currentValue += event.target.textContent;
@@ -104,8 +116,6 @@ function operate(operator,firstNumber,secondNumber){
                         display.textContent = currentValue;
                     }
 
-
-                
             }
     })
     
