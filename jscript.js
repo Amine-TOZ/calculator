@@ -56,37 +56,46 @@ let currentValue= "";
 
             
             if(event.target.tagName === "BUTTON") {
-                
-                if(currentValue.includes("Error")) currentValue = "";
-    
-                currentValue += event.target.textContent;
-                display.textContent = currentValue;
-    
-                let  arrNumbers = currentValue.split(/[+\-*/]/).filter((part) => part !== "" && part !== "=");
-                     firstNumber = parseFloat(arrNumbers[0]);
-                     secondNumber = parseFloat(arrNumbers[1]);
-                     operator = currentValue.match(/[+\-*/]/g);
-                   
-                if(arrNumbers.length == 2 && /[+\-*/=]/.test(event.target.textContent)){
-                    switch (event.target.textContent) {
-                        case "+":
-                        case "-":
-                        case "*":
-                        case "/": 
-                          currentValue = 
-                          `${operate(operator.at(-1),firstNumber,secondNumber)}${event.target.textContent}`;
-                          display.textContent = currentValue;
-                            break;
+                  
+                if (currentValue ==="Error") currentValue = "";
+
+                if(event.target.textContent !== "Clear"){
+
                     
-                        case "=":
-                          currentValue = operate(operator.at(-1),firstNumber,secondNumber);
-                          display.textContent = currentValue;
-                            break; 
-                    }
-                   
-                } else if(arrNumbers.length < 2 &&  event.target.textContent == "=") {
-                    currentValue = currentValue.replace(/[+\-*/=]/g,"");
+                    currentValue += event.target.textContent;
                     display.textContent = currentValue;
+        
+                    let  arrNumbers = currentValue.split(/[+\-*/]/).filter((part) => part !== "" && part !== "=");
+                         firstNumber = parseFloat(arrNumbers[0]);
+                         secondNumber = parseFloat(arrNumbers[1]);
+                         operator = currentValue.match(/[+\-*/]/g);
+                       
+                    if(arrNumbers.length == 2 && /[+\-*/=]/.test(event.target.textContent)){
+                        switch (event.target.textContent) {
+                            case "+":
+                            case "-":
+                            case "*":
+                            case "/": 
+                              currentValue = 
+                              `${operate(operator.at(-1),firstNumber,secondNumber)}${event.target.textContent}`;
+                              display.textContent = currentValue;
+                                break;
+                        
+                            case "=":
+                              currentValue = operate(operator.at(-1),firstNumber,secondNumber);
+                              display.textContent = currentValue;
+                                break; 
+                        }
+                       
+                    } else if(arrNumbers.length < 2 &&  event.target.textContent == "=") {
+                        currentValue = currentValue.replace(/[+\-*/=]/g,"");
+                        display.textContent = currentValue;
+                    }
+
+
+                }else if(event.target.textContent == "Clear") {
+                    currentValue = ""
+                    display.textContent = "0";
                 }
             }
     })
